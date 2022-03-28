@@ -30,4 +30,4 @@ So, another *static library* is created.
  - Then all file were assemled, and in directories `hello_world_application` and `solver_application` in directory `cmake-build` I got two executable file and run them.
 ![Img 8](images/HW.png)
 ![Img 9](images/X2.png)
- And applications ran!!!  
+ - And applications ran!!!  
