@@ -3,7 +3,7 @@
  - In directory `formatter_lib` I created such `CMakeLists.txt`:
 ![Img 1](images/ForLib.png)
  - `cmake_minimum_required` set minimal version of cmake tools.
- - `project' set the name of build.
+ - `project` set the name of build.
  - `set` require minimal standart of `g++` compiler.
  - Command `add_library` add in build of project block of files, which will be used like library of all functions, determined in these files.
  - So, *static library* is created.
