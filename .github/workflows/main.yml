@@ -31,7 +31,11 @@ jobs:
       run : |
         cd cmake-build/hello_world_application
         ./hello_world
-    - name: Run solver_application
+    - name: First attempt to run solver_application
       run : | 
         cd cmake-build/solver_application
-        ls
+        ./solver 1 2 1
+    - name: Second attempt to run solver_application
+      run : | 
+        cd cmake-build/solver_application
+        ./solver 21 16 9
