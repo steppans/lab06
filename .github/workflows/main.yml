@@ -8,7 +8,7 @@ name: Demo_run
 on:
   push:
     branches:
-      - master
+      - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,10 +22,13 @@ jobs:
     - name: Check existance of cmake
       run : cmake --version
     
-    
-  my_test_windows:
-    runs-on: windows
-    
-    steps:
-    - name: Check existance of cmake
-      run : cmake --version
+    - name: Make build
+      run : |
+        rm -rf cmake-build/*
+        cd cmake-build
+        cmake ..
+        make
+    - name: Run hello_world_application
+      run : |
+        cd cmake-build/hello_world_application
+        ./hello_world
