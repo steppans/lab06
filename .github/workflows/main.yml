@@ -60,14 +60,14 @@ jobs:
       shell: bash
       run  : |
         cd cmake-build/hello_world_application
-        ./hello_world
+        hello_world.exe
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
         cd cmake-build/solver_application
-        ./solver 1 6 9
+        solver.exe 1 6 9
     - name : Second attempt to run solver_application
       shell: bash
       run  : | 
         cd cmake-build/solver_application
-        ./solver 10 21 9
+        solver.exe 10 21 9
