@@ -60,10 +60,7 @@ jobs:
       shell: bash
       run  : |
         cd cmake-build/hello_world_application
-        ls
-        ./hello_world.dir
-        hello_world.sln
-        ./hello_world.sln
+        tree
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
