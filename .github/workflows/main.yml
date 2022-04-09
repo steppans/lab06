@@ -60,6 +60,7 @@ jobs:
       shell: bash
       run  : |
         cd cmake-build/hello_world_application
+        ls
         hello_world.exe
     - name : First attempt to run solver_application
       shell: bash
