@@ -40,7 +40,7 @@ jobs:
         cd cmake-build/solver_application
         ./solver 21 16 9
   my_test_windows:
-    runs-on: windows
+    runs-on: windows-latest
     
     steps:
     - name: Git clone my repo
