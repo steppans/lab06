@@ -31,4 +31,4 @@ jobs:
     - name: Run hello_world_application
       run : |
         cd camke-build/hello_world_application
-        /hello_world
+        ./hello_world
