@@ -30,5 +30,6 @@ jobs:
         make
     - name: Run hello_world_application
       run : |
-        cd camke-build/hello_world_application
-        ./hello_world
+        ls
+        cd camke-build
+        ls
