@@ -56,14 +56,14 @@ jobs:
         cmake --build .
     - name : Run hello_world_application
       run  : |
-        cd cmake-build/hello_world_application
-        tree \ /f
+        cd cmake-build/hello_world_application/Debug
+        hello_world.exe
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
-        cd cmake-build/solver_application
+        cd cmake-build/solver_application/Debug
         solver.exe 1 6 9
     - name : Second attempt to run solver_application
       run  : | 
-        cd cmake-build/solver_application
+        cd cmake-build/solver_application/Debug
         solver.exe 10 21 9
