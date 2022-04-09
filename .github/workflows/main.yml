@@ -55,7 +55,7 @@ jobs:
       run  : |
         mkdir cmake-build && cd cmake-build
         cmake ..
-        make
+        cmake --build .
     - name : Run hello_world_application
       shell: bash
       run  : |
