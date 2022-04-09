@@ -29,6 +29,6 @@ jobs:
         cmake ..
         make
     - name: Run hello_world_application
-      run: ls
-    
-
+      run : |
+        cd camke-build/hello_world_application
+        /hello_world
