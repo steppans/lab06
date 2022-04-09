@@ -2,7 +2,7 @@
 # My first attemts to work with Actions
 #
 # Copyright (c) by steppans 2022
-name: Demo_run
+name: Formatter_INC
 
 # Controls when the workflow will run
 on:
@@ -22,13 +22,16 @@ jobs:
     - name: Check existance of cmake
       run : cmake --version
     
-    - name: Make build
+    - name: Make builds
       run : |
-        rm -rf cmake-build/*
-        cd cmake-build
+        mkdir cmake-build && cd cmake-build
         cmake ..
         make
     - name: Run hello_world_application
       run : |
         cd cmake-build/hello_world_application
         ./hello_world
+    - name: Run solver_application
+      run : | 
+        cd cmake-build/solver_application
+        ls
