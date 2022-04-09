@@ -61,9 +61,7 @@ jobs:
       run  : |
         cd cmake-build/hello_world_application
         ls
-        cd hello_world.dir
-        ls
-        hello_world.exe
+        hello_world.dir
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
