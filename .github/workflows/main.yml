@@ -47,27 +47,23 @@ jobs:
       uses: actions/checkout@v1
       
     - name : Check existance of cmake
-      shell: bash
       run  : cmake --version
     
     - name : Make builds
-      shell: bash
       run  : |
         mkdir cmake-build && cd cmake-build
         cmake ..
         cmake --build .
     - name : Run hello_world_application
-      shell: bash
       run  : |
         cd cmake-build/hello_world_application
-        tree
+        tree \
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
         cd cmake-build/solver_application
         solver.exe 1 6 9
     - name : Second attempt to run solver_application
-      shell: bash
       run  : | 
         cd cmake-build/solver_application
         solver.exe 10 21 9
