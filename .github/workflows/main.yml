@@ -22,10 +22,13 @@ jobs:
     - name: Check existance of cmake
       run : cmake --version
     
+    - name: Make build
+      run : |
+        rm -rf cmake-build/*
+        cd cmake-build
+        cmake ..
+        make
+    - name: Run hello_world_application
+      run: ls
     
-  my_test_windows:
-    runs-on: windows
-    
-    steps:
-    - name: Check existance of cmake
-      run : cmake --version
+
