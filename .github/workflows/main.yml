@@ -57,7 +57,7 @@ jobs:
     - name : Run hello_world_application
       run  : |
         cd cmake-build/hello_world_application
-        tree \
+        tree \ /f
     - name : First attempt to run solver_application
       shell: bash
       run  : | 
