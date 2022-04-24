@@ -1,16 +1,15 @@
 #--------------------------
-# My first attemts to work with Actions
+# Working with CPack
 #
 # Copyright (c) by steppans 2022
+
 name: Formatter_INC
 
-# Controls when the workflow will run
 on:
   push:
     branches:
       - main
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   my_test_linux:
     runs-on: ubuntu-latest
@@ -27,10 +26,6 @@ jobs:
         mkdir cmake-build && cd cmake-build
         cmake ..
         make
-    - name: Run hello_world_application
-      run : |
-        cd cmake-build/hello_world_application
-        ./hello_world
     - name: First attempt to run solver_application
       run : | 
         cd cmake-build/solver_application
@@ -39,31 +34,3 @@ jobs:
       run : | 
         cd cmake-build/solver_application
         ./solver 21 16 9
-  my_test_windows:
-    runs-on: windows-latest
-    
-    steps:
-    - name: Git clone my repo
-      uses: actions/checkout@v1
-      
-    - name : Check existance of cmake
-      run  : cmake --version
-    
-    - name : Make builds
-      run  : |
-        mkdir cmake-build && cd cmake-build
-        cmake ..
-        cmake --build .
-    - name : Run hello_world_application
-      run  : |
-        cd cmake-build/hello_world_application/Debug
-        ./hello_world.exe
-    - name : First attempt to run solver_application
-      shell: bash
-      run  : | 
-        cd cmake-build/solver_application/Debug
-        ./solver.exe 1 6 9
-    - name : Second attempt to run solver_application
-      run  : | 
-        cd cmake-build/solver_application/Debug
-        ./solver.exe 10 21 9
