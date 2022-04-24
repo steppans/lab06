@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.12)
 
 project(main)
 
-include(CPackConfig.cmake)
-
 set(CMAKE_CXX_STANDART 17)
 
 # Add sub directories
