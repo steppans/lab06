@@ -3,7 +3,7 @@
 #
 # Copyright (c) by steppans 2022
 
-name: Formatter_INC
+name: Solver_binary_files
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  my_test_linux:
+  test_usual_work:
     runs-on: ubuntu-latest
     
     steps:
