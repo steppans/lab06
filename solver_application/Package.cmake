@@ -3,8 +3,8 @@ include(InstallRequiredSystemLibraries)
 set (CPACK_PACKAGE_NAME "solver")
 # Number of version of package
 set(_VERSION_MAJOR 1)
-set(_VERSION_MINOR 2)
-set(_VERSION_PATCH 3)
+set(_VERSION_MINOR 0)
+set(_VERSION_PATCH 0)
 
 set(CPACK_PACKAGE_VERSION_MAJOR "${_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${_VERSION_MINOR}")
