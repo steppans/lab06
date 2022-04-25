@@ -11,8 +11,7 @@ jobs:
     name   : Create Release
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.step_version.outputs.version }}
-      upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
                         
     - name: Release
@@ -50,7 +49,7 @@ jobs:
 
     - name: Upload release
       id  : upload_release_asset
-      uses: actions/upload-release-asset@${{ github.ref }}
+      uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
