@@ -69,7 +69,7 @@ jobs:
        asset_name: Solver.zip
        asset_content_type: code/zip
 
-  upload_release_with_bin_linux:
+  Linux_binary:
     needs: Make_GitHub_Release
     runs-on: ubuntu-latest
     steps:
@@ -127,7 +127,7 @@ jobs:
         mkdir cmake && cd cmake
         cmake -DGENERATOR=BIN ..
         cmake --build .
-        cpack -G WIX
+        cpack -C CPackConfig.cmake -G WIX
         ls
 
 # - name: Upload release
@@ -155,7 +155,7 @@ jobs:
         run : |
           mkdir cmake && cd cmake
           cmake -DGENERATOR=BIN ..
-          make
+          cmake --build .
           cpack -G DragNDrop
           ls
 
