@@ -7,15 +7,16 @@ on:
       - 'v*'
                         
 jobs:
-  create_release:
+  Make_GitHub_Release:
+    name   : Create Release
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.step_version.outputs.version }}
       upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
     steps:
                         
-    - name: Create release
-      id  : release
+    - name: Release
+      id  : create_release
       uses: actions/create-release@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,10 +29,9 @@ jobs:
           prerelease: false
 
   upload_release_with_archive:
-    needs: create_release
+    needs: Make_GitHub_Release
     runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ needs.create_release.outputs.upload_url }}
+    
     steps:
     - name: Git clone my repo
       uses: actions/checkout@v1
@@ -54,12 +54,13 @@ jobs:
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
        asset_path: ./cmake/solver-1.0.0-Linux.tar.gz
 #./cmake/solver-1.0.0-Linux.zip
        asset_name: archives.tar.gz
 
   upload_release_with_bin_linux:
-    needs: create_release
+    needs: Make_GitHub_Release
     runs-on: ubuntu-latest
     steps:
     - name: Git clone my repo
@@ -91,7 +92,7 @@ jobs:
         asset_name: binary
 
   upload_release_with_bin_windows:
-    needs: create_release
+    needs: Make_GitHub_Release
     runs-on: windows-latest
     steps:
     - name: Git clone my repo
@@ -120,7 +121,7 @@ jobs:
 # ./cmake/solver-1.0.0-Linux.rpm
 
   upload_release_with_bin_macos:    
-    needs: create_release
+    needs: Make_GitHub_Release
     runs-on: windows-latest
     steps:
       - name: Git clone my repo
