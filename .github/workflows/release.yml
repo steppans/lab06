@@ -30,6 +30,8 @@ jobs:
   upload_release_with_archive:
     needs: create_release
     runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ needs.create_release.outputs.upload_url }}
     steps:
     - name: Git clone my repo
       uses: actions/checkout@v1
@@ -52,7 +54,6 @@ jobs:
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
-       upload_url: ${{ needs.create_release.outputs.upload_url }}
        asset_path: ./cmake/solver-1.0.0-Linux.tar.gz
 #./cmake/solver-1.0.0-Linux.zip
        asset_name: archives.tar.gz
