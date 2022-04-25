@@ -45,7 +45,8 @@ jobs:
         cmake -DGENERATOR=ARC ..
         make
         cpack -G TGZ
-#cpack -G ZIP
+        cpack -G ZIP
+        mv solver-1.0.0-Linux.tar.gz solver-1.0.0-Linux.zip archives
 
     - name: Upload release
       id  : upload_release_asset
@@ -54,10 +55,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
-       asset_path: ./cmake/solver-1.0.0-Linux.tar.gz
-#./cmake/solver-1.0.0-Linux.zip
-       asset_name: archives.tar.gz
-       asset_content_type: application/tgz
+       asset_path: ./cmake/archives/*
+       asset_name: archives
+       asset_content_type: application/arc
 
   upload_release_with_bin_linux:
     needs: Make_GitHub_Release
