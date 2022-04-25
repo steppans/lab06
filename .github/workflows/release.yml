@@ -55,6 +55,7 @@ jobs:
        asset_path: ./cmake/solver-1.0.0-Linux.tar.gz
 #./cmake/solver-1.0.0-Linux.zip
        asset_name: archives.tar.gz
+       asset_content_type: application/tgz
 
   upload_release_with_bin_linux:
     needs: Make_GitHub_Release
