@@ -1,138 +1,141 @@
+#------------------------
+name: Creat_release
 
-name: Creat_release_and_upload_it
 on:
-        push:
-                tags:
-                        - 'v*'
+  push:
+    tags:
+      - 'v*'
                         
 jobs:
-        create_release:
-                runs-on: ubuntu-latest
-                steps:
-                        - name: Git clone my repo
-                          uses: actions/checkout@v1
+  create_release:
+    runs-on: ubuntu-latest
+    steps:
                         
-                        - name: Create release
-                          id  : release
-                          uses: actions/create-release@v1
-                          env :
-                                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                          with:
-                                  tag_name: ${{ github.ref }}
-                                  release_name: Release ${{ github.ref }}
-                                  body: |
-                                    Upload archive and binary files for uploading
-                                  draft: false
+    - name: Create release
+      id  : release
+      uses: actions/create-release@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Upload archive and binary files for uploading
+          draft: false
 
-        upload_release_with_archive:
-                runs-on: ubuntu-latest
-                steps:
-                        - name: Git clone my repo
-                          uses: actions/checkout@v1
+  upload_release_with_archive:
+    needs: create_release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git clone my repo
+      uses: actions/checkout@v1
 
-                        - name: Prepare environment
-                          run : |
-                                cmake --version
+    - name: Prepare environment
+      run : |
+        cmake --version
 
-                        - name: Build achive files
-                          run : |
-                                mkdir cmake && cd cmake
-                                cmake -DGENERATOR=ARC ..
-                                make
-                                cpack -G TGZ
-                                cpack -G ZIP
+    - name: Build achive files
+      run : |
+        mkdir cmake && cd cmake
+        cmake -DGENERATOR=ARC ..
+        make
+        cpack -G TGZ
+        cpack -G ZIP
 
-                        - name: Upload release
-                          id  : upload_release_asset
-                          uses: actions/upload-release-asset
-                          env :
-                                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                          with: 
-                            asset_path: |
-                                    ./cmake/solver-1.0.0-Linux.tar.gz
-                                    ./cmake/solver-1.0.0-Linux.zip
+    - name: Upload release
+      id  : upload_release_asset
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       asset_path: |
+            ./cmake/solver-1.0.0-Linux.tar.gz
+            ./cmake/solver-1.0.0-Linux.zip
 
-        upload_release_with_bin_linux:
-               runs-on: ubuntu-latest
-               steps:
-                        - name: Git clone my repo
-                          uses: actions/checkout@v1
+  upload_release_with_bin_linux:
+    needs: create_release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git clone my repo
+      uses: actions/checkout@v1
 
-                        - name: Prepare environment
-                          run : |
-                                cmake --version
-                                sudo apt-get install rpm
+    - name: Prepare environment
+      run : |
+        cmake --version
+        sudo apt-get install rpm
 
-                        - name: Build binary files
-                          run : |
-                                mkdir cmake && cd cmake
-                                cmake -DGENERATOR=BIN ..
-                                make
-                                cpack -G DEB
-                                cpack -G RPM
+    - name: Build binary files
+      run : |
+        mkdir cmake && cd cmake
+        cmake -DGENERATOR=BIN ..
+        make
+        cpack -G DEB
+        cpack -G RPM
 
-                        - name: Upload release
-                          id  : upload_release_asset
-                          uses: actions/upload-release-asset
-                          env :
-                                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                          with: 
-                            asset_path: |
-                                    ./cmake/solver-1.0.0-Linux.deb
-                                    ./cmake/solver-1.0.0-Linux.rpm
+    - name: Upload release
+      id  : upload_release_asset
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+        asset_path: |
+            ./cmake/solver-1.0.0-Linux.deb
+            ./cmake/solver-1.0.0-Linux.rpm
 
-        upload_release_with_bin_windows:
-                runs-on: windows-latest
-                steps:
-                        - name: Git clone my repo
-                          uses: actions/checkout@v1
+  upload_release_with_bin_windows:
+    needs: create_release
+    runs-on: windows-latest
+    steps:
+    - name: Git clone my repo
+      uses: actions/checkout@v1
 
-                        - name: Prepare environment
-                          run : |
-                                cmake --version
+    - name: Prepare environment
+      run : |
+        cmake --version
 
-                        - name: Build binary files
-                          run : |
-                                mkdir cmake && cd cmake
-                                cmake -DGENERATOR=BIN ..
-                                cmake --build .
-                                cpack -G WIX
-                                ls
+    - name: Build binary files
+      run : |
+        mkdir cmake && cd cmake
+        cmake -DGENERATOR=BIN ..
+        cmake --build .
+        cpack -G WIX
+        ls
 
-                                # - name: Upload release
-                                # id  : upload_release_asset
-                                # uses: actions/upload-release-asset
-                                # env :
-                                # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                                # with: 
-                                # asset_path: |
-                                # ./cmake/solver-1.0.0-Linux.deb
-                                # ./cmake/solver-1.0.0-Linux.rpm
+# - name: Upload release
+# id  : upload_release_asset
+# uses: actions/upload-release-asset
+# env :
+# GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# with: 
+# asset_path: |
+# ./cmake/solver-1.0.0-Linux.deb
+# ./cmake/solver-1.0.0-Linux.rpm
 
-        upload_release_with_bin_macos:
-               runs-on: windows-latest
-               steps:
-                        - name: Git clone my repo
-                          uses: actions/checkout@v1
+  upload_release_with_bin_macos:    
+    needs: create_release
+    runs-on: windows-latest
+    steps:
+      - name: Git clone my repo
+        uses: actions/checkout@v1
 
-                        - name: Prepare environment
-                          run : |
-                                cmake --version
+      - name: Prepare environment
+        run : |
+          cmake --version
 
-                        - name: Build binary files
-                          run : |
-                                mkdir cmake && cd cmake
-                                cmake -DGENERATOR=BIN ..
-                                make
-                                cpack -G DragNDrop
-                                ls
+      - name: Build binary files
+        run : |
+          mkdir cmake && cd cmake
+          cmake -DGENERATOR=BIN ..
+          make
+          cpack -G DragNDrop
+          ls
 
-                                # - name: Upload release
-                                # id  : upload_release_asset
-                                # uses: actions/upload-release-asset
-                                # env :
-                                # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                                # with: 
-                                # asset_path: |
-                                # ./cmake/solver-1.0.0-Linux.deb
-                                # ./cmake/solver-1.0.0-Linux.rpm
+# - name: Upload release
+# id  : upload_release_asset
+# uses: actions/upload-release-asset
+# env :
+# GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# with: 
+# asset_path: |
+# ./cmake/solver-1.0.0-Linux.deb
+# ./cmake/solver-1.0.0-Linux.rpm
