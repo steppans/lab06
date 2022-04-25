@@ -27,7 +27,7 @@ jobs:
           draft: false
           prerelease: false
 
-  upload_release_with_archive:
+  Archives:
     needs: Make_GitHub_Release
     runs-on: ubuntu-latest
     
@@ -46,19 +46,28 @@ jobs:
         make
         cpack -G TGZ
         cpack -G ZIP
-        mkdir archives
-        mv solver-1.0.0-Linux.tar.gz solver-1.0.0-Linux.zip archives
 
-    - name: Upload release
-      id  : upload_release_asset
+    - name: Upload TGZ
+      id  : TGZ
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
        upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
-       asset_path: ./cmake/archives
-       asset_name: archives
-       asset_content_type: application/arc
+       asset_path: ./cmake/solver-1.0.0-Linux.tar.gz
+       asset_name: Solver.tar.gz
+       asset_content_type: code/tgz
+       
+    - name: Upload ZIP
+      id  : ZIP
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-1.0.0-Linux.zip
+       asset_name: Solver.zip
+       asset_content_type: code/zip
 
   upload_release_with_bin_linux:
     needs: Make_GitHub_Release
@@ -79,18 +88,28 @@ jobs:
         make
         cpack -G DEB
         cpack -G RPM
-
-    - name: Upload release
-      id  : upload_release_asset
+        
+    - name: Upload DEB
+      id  : DEB
       uses: actions/upload-release-asset@v1
       env :
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with: 
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: |
-            ./cmake/solver-1.0.0-Linux.deb
-            ./cmake/solver-1.0.0-Linux.rpm
-        asset_name: binary
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-1.0.0-Linux.deb
+       asset_name: solver_app.deb
+       asset_content_type: application/deb
+       
+    - name: Upload RPM
+      id  : RPM
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-1.0.0-Linux.rpm
+       asset_name: solver_app.rpm
+       asset_content_type: application/rpm
 
   upload_release_with_bin_windows:
     needs: Make_GitHub_Release
