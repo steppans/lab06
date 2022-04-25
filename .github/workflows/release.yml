@@ -46,6 +46,7 @@ jobs:
         make
         cpack -G TGZ
         cpack -G ZIP
+        mkdir archives
         mv solver-1.0.0-Linux.tar.gz solver-1.0.0-Linux.zip archives
 
     - name: Upload release
