@@ -1,5 +1,6 @@
+#------------------------
+name: Creat_release
 
-name: Creat_release_and_upload_it
 on:
         push:
                 tags:
