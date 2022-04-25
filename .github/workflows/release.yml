@@ -9,6 +9,9 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.step_version.outputs.version }}
+      upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
     steps:
                         
     - name: Create release
