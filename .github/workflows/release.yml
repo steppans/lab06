@@ -143,7 +143,7 @@ jobs:
 
   upload_release_with_bin_macos:    
     needs: Make_GitHub_Release
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - name: Git clone my repo
         uses: actions/checkout@v1
@@ -155,17 +155,17 @@ jobs:
       - name: Build binary files
         run : |
           mkdir cmake && cd cmake
-          cmake -DGENERATOR=DMG ..
+          cmake -DGENERATOR=BIN ..
           make
-          cpack
-          ls
+          cpack -G DragNDrop
 
-# - name: Upload release
-# id  : upload_release_asset
-# uses: actions/upload-release-asset
-# env :
-# GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# with: 
-# asset_path: |
-# ./cmake/solver-1.0.0-Linux.deb
-# ./cmake/solver-1.0.0-Linux.rpm
+      - name: Upload DMG
+        id  : MSI
+        uses: actions/upload-release-asset@v1
+        env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+          asset_path: ./cmake/solver-1.0.0-Darwin.msi
+          asset_name: solver_app.dmg
+          asset_content_type: application/dmg
