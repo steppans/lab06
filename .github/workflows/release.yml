@@ -1,4 +1,8 @@
-#------------------------
+#---------------------------------
+# Setup releases
+#
+# Copyright (c) by steppans 2022
+#---------------------------------
 name: Creat_release
 
 on:
@@ -165,6 +169,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with: 
           upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
-          asset_path: ./cmake/solver-1.0.0-Darwin.msi
+          asset_path: ./cmake/solver-1.0.0-Darwin.dmg
           asset_name: solver_app.dmg
           asset_content_type: application/dmg
