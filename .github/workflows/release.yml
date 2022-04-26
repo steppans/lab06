@@ -111,7 +111,7 @@ jobs:
        asset_name: solver_app.rpm
        asset_content_type: application/rpm
 
-  upload_release_with_bin_windows:
+  Windows_Binary:
     needs: Make_GitHub_Release
     runs-on: windows-latest
     steps:
@@ -128,17 +128,18 @@ jobs:
         cmake -DGENERATOR=BIN ..
         cmake --build .
         cpack -C CPackConfig.cmake -G WIX
-        ls
 
-# - name: Upload release
-# id  : upload_release_asset
-# uses: actions/upload-release-asset
-# env :
-# GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# with: 
-# asset_path: |
-# ./cmake/solver-1.0.0-Linux.deb
-# ./cmake/solver-1.0.0-Linux.rpm
+    - name: Upload MSI
+      id  : MSI
+      uses: actions/upload-release-asset@v1
+      env :
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+       upload_url: ${{ needs.Make_GitHub_Release.outputs.upload_url }}
+       asset_path: ./cmake/solver-1.0.0-win64.msi
+       asset_name: solver_app.msi
+       asset_content_type: application/msi
+
 
   upload_release_with_bin_macos:    
     needs: Make_GitHub_Release
@@ -154,9 +155,9 @@ jobs:
       - name: Build binary files
         run : |
           mkdir cmake && cd cmake
-          cmake -DGENERATOR=BIN ..
-          cmake --build .
-          cpack -G DragNDrop
+          cmake -DGENERATOR=DMG ..
+          make
+          cpack
           ls
 
 # - name: Upload release
