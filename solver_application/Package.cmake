@@ -26,9 +26,4 @@ if(${GENERATOR} MATCHES ARC)
 	install(TARGETS formatter_ex solver_lib LIBRARY DESTINATION lib)
 endif()
 
-if(${GENERATOR} MATCHES BIN)
-        set(CPACK_GENERATOR "DragNDrop")
-        install(TARGETS solver DESTINATION bin)
-endif()
-
 include(CPack)
